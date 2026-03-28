@@ -1,0 +1,14 @@
+import { supabaseService } from '../services/supabase.service';
+import { Router } from 'express';
+import { chatController } from '../controllers/chat.controller';
+import { authMiddleware } from '../middleware/auth.middleware';
+import { strictRateLimit } from '../middleware/rateLimit.middleware';
+const router = Router();
+router.use(authMiddleware);
+router.post('/sessions', chatController.createSession);
+router.get('/sessions', chatController.getSessions);
+router.delete('/sessions/:sessionId', chatController.deleteSession);
+router.get('/sessions/:sessionId/messages', chatController.getMessages);
+router.post('/sessions/:sessionId/stream', strictRateLimit, chatController.streamChat);
+router.post('/sessions/:sessionId/message', chatController.sendMessage);
+export default router;

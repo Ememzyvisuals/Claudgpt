@@ -1,0 +1,13 @@
+import { Router } from 'express';
+import { projectController } from '../controllers/project.controller';
+import { authMiddleware } from '../middleware/auth.middleware';
+const router = Router();
+router.use(authMiddleware);
+router.post('/', projectController.createProject);
+router.get('/', projectController.getProjects);
+router.get('/:projectId', projectController.getProject);
+router.put('/:projectId', projectController.updateProject);
+router.delete('/:projectId', projectController.deleteProject);
+router.get('/:projectId/files', projectController.getFiles);
+router.post('/:projectId/files', projectController.saveFile);
+export default router;

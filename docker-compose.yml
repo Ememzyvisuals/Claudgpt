@@ -1,0 +1,19 @@
+version: '3.9'
+services:
+  backend:
+    build: { context: ./backend, dockerfile: Dockerfile }
+    container_name: claudgpt-backend
+    ports: ["4000:4000"]
+    env_file: [.env]
+    networks: [claudgpt-net]
+    restart: unless-stopped
+  frontend:
+    build: { context: ./frontend, dockerfile: Dockerfile }
+    container_name: claudgpt-frontend
+    ports: ["3000:3000"]
+    env_file: [.env]
+    depends_on: [backend]
+    networks: [claudgpt-net]
+    restart: unless-stopped
+networks:
+  claudgpt-net: { driver: bridge }
