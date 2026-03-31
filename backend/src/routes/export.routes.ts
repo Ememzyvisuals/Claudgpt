@@ -1,0 +1,12 @@
+import { Router } from 'express';
+import { exportController } from '../controllers/export.controller';
+import { authMiddleware } from '../middleware/auth.middleware';
+const router = Router();
+router.use(authMiddleware);
+router.post('/zip/:projectId', exportController.exportAsZip);
+router.post('/markdown/:projectId', exportController.exportAsMarkdown);
+router.post('/json/:projectId', exportController.exportAsJson);
+router.post('/readme/:projectId', exportController.exportReadme);
+router.get('/validate/:projectId', exportController.validateExport);
+router.get('/preview/:projectId', exportController.previewExport);
+export default router;

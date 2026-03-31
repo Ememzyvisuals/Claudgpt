@@ -1,0 +1,14 @@
+import { Router } from 'express';
+import { agentController } from '../controllers/agent.controller';
+import { authMiddleware } from '../middleware/auth.middleware';
+import { strictRateLimit } from '../middleware/rateLimit.middleware';
+const router = Router();
+router.use(authMiddleware);
+router.use(strictRateLimit);
+router.post('/run', agentController.runAgentPipeline);
+router.post('/planner', agentController.runPlanner);
+router.post('/coder', agentController.runCoder);
+router.post('/debugger', agentController.runDebugger);
+router.post('/reviewer', agentController.runReviewer);
+router.get('/status/:taskId', agentController.getTaskStatus);
+export default router;
